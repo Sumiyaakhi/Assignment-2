@@ -23,10 +23,20 @@ const updateSingleProduct = async (_id: string, updateData: any) => {
   });
   return updatedProduct;
 };
+// delete a single product
+const deleteSingleProduct = async (productId: string) => {
+  try {
+    const deletedProduct = await Product.findByIdAndDelete(productId).exec();
+    return deletedProduct;
+  } catch (err: any) {
+    throw new Error(`Could not delete product: ${err.message}`);
+  }
+};
 
 export const ProductServices = {
   createProduct,
   getAllProduct,
   getSingleProduct,
   updateSingleProduct,
+  deleteSingleProduct,
 };
