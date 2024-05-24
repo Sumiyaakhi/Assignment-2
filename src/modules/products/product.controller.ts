@@ -47,9 +47,41 @@ const getSingleProduct = async (req: Request, res: Response) => {
     });
   }
 };
+//update single product
+const updateSingleProduct = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const updateData = req.body;
+
+    const updatedProduct = await ProductServices.updateSingleProduct(
+      productId,
+      updateData
+    );
+
+    if (updatedProduct) {
+      res.status(200).json({
+        success: true,
+        message: "Product updated successfully!",
+        data: updatedProduct,
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        message: "Product not found!",
+      });
+    }
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: "Could not update product!",
+      error: err.message,
+    });
+  }
+};
 
 export const ProductControllers = {
   createProduct,
   getAllProducts,
   getSingleProduct,
+  updateSingleProduct,
 };
