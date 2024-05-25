@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { OrderServices } from "./order.service";
 import { ProductServices } from "../products/product.service";
+import orderValidationSchema from "./order.validation";
 
 // create order
 // const createOrder = async (req: Request, res: Response) => {
@@ -17,7 +18,23 @@ import { ProductServices } from "../products/product.service";
 const createOrder = async (req: Request, res: Response) => {
   try {
     const { email, productId, price, quantity } = req.body;
+    const { error, value } = orderValidationSchema.validate({
+      email,
+      productId,
+      price,
+      quantity,
+    });
+
     const product = await ProductServices.getSingleProduct(productId);
+
+    if (error) {
+      res.status(500).json({
+        success: false,
+        message: "something went wrong",
+        erro: error.details,
+      });
+    }
+    console.log(error, value);
 
     if (!product) {
       return res.status(404).json({
