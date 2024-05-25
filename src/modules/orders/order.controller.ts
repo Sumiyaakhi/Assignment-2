@@ -70,6 +70,14 @@ const getAllOrders = async (req: Request, res: Response) => {
     if (email && typeof email === "string") {
       // Search orders by email if email parameter is provided
       result = await OrderServices.searchOrdersByEmail(email);
+
+      if (!result || result.length === 0) {
+        return res.status(404).json({
+          success: false,
+          message: "Order not found",
+        });
+      }
+
       res.status(200).json({
         success: true,
         message: `Orders fetched successfully for '${email}' email!`,
@@ -78,6 +86,7 @@ const getAllOrders = async (req: Request, res: Response) => {
     } else {
       // Fetch all orders if no email parameter is provided
       result = await OrderServices.getAllOrders();
+
       res.status(200).json({
         success: true,
         message: "Orders fetched successfully!",
