@@ -6,7 +6,7 @@ const createProduct = async (payLoad: TProduct) => {
   const result = await Product.create(payLoad);
   return result;
 };
-// get all product
+// get all products and search products by name
 const getAllProduct = async () => {
   const result = await Product.find();
   return result;
@@ -33,10 +33,26 @@ const deleteSingleProduct = async (productId: string) => {
   }
 };
 
+// search products by name
+const searchProductsByName = async (query: string) => {
+  try {
+    const searchResults = await Product.find({
+      name: { $regex: query, $options: "i" },
+    }).exec();
+
+    return searchResults;
+  } catch (err: any) {
+    throw new Error(
+      `An error occurred while searching products: ${err.message}`
+    );
+  }
+};
+
 export const ProductServices = {
   createProduct,
   getAllProduct,
   getSingleProduct,
   updateSingleProduct,
   deleteSingleProduct,
+  searchProductsByName,
 };
