@@ -5,7 +5,7 @@ import productValidationSchema from "./product.validation";
 // create product
 const createProduct = async (req: Request, res: Response) => {
   const productData = req.body;
-  const { error, value } = productValidationSchema.validate(productData);
+  const { error } = productValidationSchema.validate(productData);
 
   // Check for validation errors
   if (error) {
@@ -86,7 +86,7 @@ const updateSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
-    const { error, value } = productValidationSchema.validate(updateData);
+    const { error } = productValidationSchema.validate(updateData);
 
     // Check for validation errors
     if (error) {

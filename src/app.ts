@@ -1,4 +1,4 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response } from "express";
 import { ProductRoutes } from "./modules/products/product.route";
 import { OrdersRoutes } from "./modules/orders/order.route";
 
@@ -10,7 +10,7 @@ app.use("/api/products", ProductRoutes);
 app.use("/api/orders", OrdersRoutes);
 
 // Catch all undefined routes
-app.use((req: Request, res: Response, next: NextFunction) => {
+app.use((req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: "Route not found",
@@ -18,7 +18,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 });
 
 // Error-handling middleware
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+app.use((err: any, req: Request, res: Response) => {
   console.error(err.stack);
   res.status(500).json({
     success: false,

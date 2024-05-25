@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "npx eslint src --ignore-pattern .ts",
     "lint:fix": "npx eslint src --fix",
+    "build": "tsc",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|ts|json)\"",
     "prettier:fix": "npx prettier --write src",
     "start:prod": "node ./dist/server.js",

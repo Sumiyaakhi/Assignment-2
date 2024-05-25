@@ -18,7 +18,7 @@ import orderValidationSchema from "./order.validation";
 const createOrder = async (req: Request, res: Response) => {
   try {
     const { email, productId, price, quantity } = req.body;
-    const { error, value } = orderValidationSchema.validate({
+    const { error } = orderValidationSchema.validate({
       email,
       productId,
       price,
@@ -34,7 +34,6 @@ const createOrder = async (req: Request, res: Response) => {
         erro: error.details,
       });
     }
-    console.log(error, value);
 
     if (!product) {
       return res.status(404).json({
