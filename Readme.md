@@ -2,7 +2,10 @@
 
 # To run this project :
 
-- Firstly you have to copy the live url link and after that paste on the postman or any other sites.
+- Firstly you have to copy the live url link which is
+  (https://assignment-2-sand-two.vercel.app/
+  )and after that paste on the postman or any other sites.
+
 - Then you should be added api/products or api/orders for the others route name like
   (https://assignment-2-sand-two.vercel.app/api/products)
   (https://assignment-2-sand-two.vercel.app/api/orders )
