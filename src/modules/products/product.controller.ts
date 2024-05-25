@@ -3,25 +3,35 @@ import { ProductServices } from "./product.service";
 import Joi from "joi";
 import productValidationSchema from "./product.validation";
 
-// create prosuct
+// create product
 const createProduct = async (req: Request, res: Response) => {
   const productData = req.body;
   const { error, value } = productValidationSchema.validate(productData);
-  const result = await ProductServices.createProduct(productData);
+
+  // Check for validation errors
   if (error) {
-    res.status(500).json({
+    return res.status(400).json({
       success: false,
-      message: "something went wrong",
-      erro: error.details,
+      message: "Validation failed",
+      error: error.details,
     });
   }
-  console.log(error, value);
 
-  res.json({
-    success: true,
-    message: "Product created successfully!",
-    data: result,
-  });
+  // Proceed to create the product if validation passes
+  try {
+    const result = await ProductServices.createProduct(productData);
+    res.json({
+      success: true,
+      message: "Product created successfully!",
+      data: result,
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to create product",
+      error: err.message,
+    });
+  }
 };
 
 // get all products and search products by name
