@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { ProductServices } from "./product.service";
-import Joi from "joi";
 import productValidationSchema from "./product.validation";
 
 // create product
@@ -87,6 +86,16 @@ const updateSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const updateData = req.body;
+    const { error, value } = productValidationSchema.validate(updateData);
+
+    // Check for validation errors
+    if (error) {
+      return res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        error: error.details,
+      });
+    }
 
     const updatedProduct = await ProductServices.updateSingleProduct(
       productId,
